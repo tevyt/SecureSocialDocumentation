@@ -1,0 +1,89 @@
+=============
+Configuration
+=============
+
+--------------------------------
+Secure Social Configuration File
+--------------------------------
+
+Create a securesocial.conf file and link this file to your application.conf file
+
+.. code-block:: scala
+
+   include "securesocial.conf"
+
+Descriptions of the attributes used in the configuration of the securesocial.conf file as well as a sample securesocial.conf file can be found `here`_
+Within securesocial.conf is also where the client keys for providers are registered.
+The link below contains the list of providers currently supported by SecureSocial 3.0
+
+-------------------
+Supported Providers
+-------------------
+i. Twitter
+
+.. _here: http://securesocial.ws/guide/configuration.html
+
+-------------------
+Runtime Environment
+-------------------
+
+Secure Social 3.0 Requires the implementation of a class that extends RuntimeEnvironment. This class registers the applications Providers, the class used to represent a user and the UserService.
+
+Example Runtime Evironment example
+
+.. code-block:: scala
+    
+   import services.DemoUserService
+
+   import scala.collection.immutable
+
+   class DemoEnvironment extends RuntimeEnvironment.Default[User]{
+     override val userService: UserService[User] = new DemoUserService()
+     override lazy val providers = {
+        immutable.ListMap(
+            include(
+                new FacebookProvider(routes, cacheService,oauth2ClientFor(FacebookProvider.Facebook))
+                   ),
+            include(
+                new TwitterProvider(routes,cacheService,oauth1ClientFor(TwitterProvider.Twitter))
+                   ),
+            include(
+                new GoogleProvider(routes , cacheService,oauth2ClientFor(GoogleProvider.Google))
+                   )
+        )
+     }
+ }
+
+The example above registers the Providers Facebook , Twitter and Google+. The `demo`_ in the project repository contains an example runtime environment with configurations for all available providers.
+
+.. _demo: http://www.google.com
+
+------------
+Global Class
+------------
+
+SecureSocial 3.0 requires the implementation of a file (Global.java) this file should be placed in the app folder. This file registers the RuntimeEnvironment to be used by SecureSocial. 
+
+Example Global.java
+
+.. code-block:: java
+	
+   import play.GlobalSettings;
+   import securesocial.core.RuntimeEnvironment;
+   import services.DemoEnvironment;
+
+   public class Global extends GlobalSettings {
+      private RuntimeEnvironment env = new DemoEnvironment(); //Defined RuntimeEnvironment.
+
+      @Override
+      public <A> A getControllerInstance(Class<A> controllerClass) throws Exception{
+         A result;
+	 try{
+            result = controllerClass.getDeclaredConstructor(RuntimeEnvironment.class).newInstance(env);
+         }catch (NoSuchMethodException e){
+            result = super.getControllerInstance(controllerClass);
+         }
+        return result;
+     }
+  }
+   

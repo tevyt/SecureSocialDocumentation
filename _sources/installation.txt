@@ -1,0 +1,51 @@
+=============
+Installation
+=============
+
+-----------------
+Installing Plugin
+-----------------
+To install the latest version of SecureSocial in your application add the following line to your build.sbt 
+
+.. code-block:: scala
+
+    "ws.securesocial" %% "securesocial" % "master-SNAPSHOT"  
+
+The SonaType resolver's also need to be added to build.sbt
+
+.. code-block:: scala
+    
+    resolvers += Resolver.sonatypeRepo("snapshots")
+
+Example build.sbt:
+
+.. code-block:: scala
+    
+   name := """SecureSocialDemo2"""
+
+   version := "1.0-SNAPSHOT"
+
+   lazy val root = (project in file(".")).enablePlugins(PlayJava)
+
+   scalaVersion := "2.11.1"
+
+   libraryDependencies ++= Seq(
+        javaJdbc,
+        javaEbean,
+        cache,
+        javaWs,
+        "ws.securesocial" %% "securesocial" % "master-SNAPSHOT",
+        "postgresql" % "postgresql" % "9.1-901-1.jdbc4")
+
+        resolvers += Resolver.sonatypeRepo("snapshots")
+-------------
+Adding routes
+-------------
+SecureSocial's routes need to be included in your applications routes file
+
+.. code-block:: scala
+
+   ->         /auth                securesocial.Routes
+
+The line aboves uses the -> symbol to link SecureSocial's routes to your application.
+

@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Configuration &mdash; Secure Social Demo v0.0.01 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     'v0.0.01',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Secure Social Demo v0.0.01 documentation" href="index.html" />
+    <link rel="next" title="Modeling Users" href="model.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="model.html" title="Modeling Users"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Secure Social Demo v0.0.01 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="secure-social-configuration-file">
+<h2>Secure Social Configuration File<a class="headerlink" href="#secure-social-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Create a securesocial.conf file and link this file to your application.conf file</p>
+<div class="highlight-scala"><div class="highlight"><pre><span class="n">include</span> <span class="s">&quot;securesocial.conf&quot;</span>
+</pre></div>
+</div>
+<p>Descriptions of the attributes used in the configuration of the securesocial.conf file as well as a sample securesocial.conf file can be found <a class="reference external" href="http://securesocial.ws/guide/configuration.html">here</a>
+Within securesocial.conf is also where the client keys for providers are registered.
+The link below contains the list of providers currently supported by SecureSocial 3.0</p>
+</div>
+<div class="section" id="supported-providers">
+<h2>Supported Providers<a class="headerlink" href="#supported-providers" title="Permalink to this headline">¶</a></h2>
+<ol class="lowerroman simple">
+<li>Twitter</li>
+</ol>
+</div>
+<div class="section" id="runtime-environment">
+<h2>Runtime Environment<a class="headerlink" href="#runtime-environment" title="Permalink to this headline">¶</a></h2>
+<p>Secure Social 3.0 Requires the implementation of a class that extends RuntimeEnvironment. This class registers the applications Providers, the class used to represent a user and the UserService.</p>
+<p>Example Runtime Evironment example</p>
+<div class="highlight-scala"><div class="highlight"><pre>  <span class="k">import</span> <span class="nn">services.DemoUserService</span>
+
+  <span class="k">import</span> <span class="nn">scala.collection.immutable</span>
+
+  <span class="k">class</span> <span class="nc">DemoEnvironment</span> <span class="k">extends</span> <span class="nc">RuntimeEnvironment</span><span class="o">.</span><span class="nc">Default</span><span class="o">[</span><span class="kt">User</span><span class="o">]{</span>
+    <span class="k">override</span> <span class="k">val</span> <span class="n">userService</span><span class="k">:</span> <span class="kt">UserService</span><span class="o">[</span><span class="kt">User</span><span class="o">]</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">DemoUserService</span><span class="o">()</span>
+    <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">providers</span> <span class="k">=</span> <span class="o">{</span>
+       <span class="n">immutable</span><span class="o">.</span><span class="nc">ListMap</span><span class="o">(</span>
+           <span class="n">include</span><span class="o">(</span>
+               <span class="k">new</span> <span class="nc">FacebookProvider</span><span class="o">(</span><span class="n">routes</span><span class="o">,</span> <span class="n">cacheService</span><span class="o">,</span><span class="n">oauth2ClientFor</span><span class="o">(</span><span class="nc">FacebookProvider</span><span class="o">.</span><span class="nc">Facebook</span><span class="o">))</span>
+                  <span class="o">),</span>
+           <span class="n">include</span><span class="o">(</span>
+               <span class="k">new</span> <span class="nc">TwitterProvider</span><span class="o">(</span><span class="n">routes</span><span class="o">,</span><span class="n">cacheService</span><span class="o">,</span><span class="n">oauth1ClientFor</span><span class="o">(</span><span class="nc">TwitterProvider</span><span class="o">.</span><span class="nc">Twitter</span><span class="o">))</span>
+                  <span class="o">),</span>
+           <span class="n">include</span><span class="o">(</span>
+               <span class="k">new</span> <span class="nc">GoogleProvider</span><span class="o">(</span><span class="n">routes</span> <span class="o">,</span> <span class="n">cacheService</span><span class="o">,</span><span class="n">oauth2ClientFor</span><span class="o">(</span><span class="nc">GoogleProvider</span><span class="o">.</span><span class="nc">Google</span><span class="o">))</span>
+                  <span class="o">)</span>
+       <span class="o">)</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The example above registers the Providers Facebook , Twitter and Google+. The <a class="reference external" href="http://www.google.com">demo</a> in the project repository contains an example runtime environment with configurations for all available providers.</p>
+</div>
+<div class="section" id="global-class">
+<h2>Global Class<a class="headerlink" href="#global-class" title="Permalink to this headline">¶</a></h2>
+<p>SecureSocial 3.0 requires the implementation of a file (Global.java) this file should be placed in the app folder. This file registers the RuntimeEnvironment to be used by SecureSocial.</p>
+<p>Example Global.java</p>
+<div class="highlight-java"><div class="highlight"><pre> <span class="kn">import</span> <span class="nn">play.GlobalSettings</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">securesocial.core.RuntimeEnvironment</span><span class="o">;</span>
+ <span class="kn">import</span> <span class="nn">services.DemoEnvironment</span><span class="o">;</span>
+
+ <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Global</span> <span class="kd">extends</span> <span class="n">GlobalSettings</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">RuntimeEnvironment</span> <span class="n">env</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DemoEnvironment</span><span class="o">();</span> <span class="c1">//Defined RuntimeEnvironment.</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">A</span> <span class="nf">getControllerInstance</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">controllerClass</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">{</span>
+       <span class="n">A</span> <span class="n">result</span><span class="o">;</span>
+       <span class="k">try</span><span class="o">{</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="n">controllerClass</span><span class="o">.</span><span class="na">getDeclaredConstructor</span><span class="o">(</span><span class="n">RuntimeEnvironment</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">newInstance</span><span class="o">(</span><span class="n">env</span><span class="o">);</span>
+       <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">e</span><span class="o">){</span>
+          <span class="n">result</span> <span class="o">=</span> <span class="kd">super</span><span class="o">.</span><span class="na">getControllerInstance</span><span class="o">(</span><span class="n">controllerClass</span><span class="o">);</span>
+       <span class="o">}</span>
+      <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuration</a><ul>
+<li><a class="reference internal" href="#secure-social-configuration-file">Secure Social Configuration File</a></li>
+<li><a class="reference internal" href="#supported-providers">Supported Providers</a></li>
+<li><a class="reference internal" href="#runtime-environment">Runtime Environment</a></li>
+<li><a class="reference internal" href="#global-class">Global Class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="model.html"
+                        title="next chapter">Modeling Users</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/configuration.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Travis Smith.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/configuration.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

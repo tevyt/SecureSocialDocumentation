@@ -1,0 +1,101 @@
+==============
+Modeling Users
+==============
+
+Secure Social 3.0 requires the use of a class to represent a Users. One strategy for doing this is to create a Profile class which is used to store data returned from the SecureSocial UserService, then by creating a User class to host a collection of Profiles, allowing for the linking of multiple accounts to a single user.
+
+User Model Example
+
+.. code-block:: java
+
+   package models;
+
+
+   import play.db.ebean.Model;
+
+
+   import javax.persistence.*;
+
+   import java.util.ArrayList;
+   import java.util.List;
+
+
+
+   @Entity
+   @Table(name = "users")
+   public class User extends Model {
+        @Id
+        @GeneratedValue
+        public Long id;
+        
+        //A user has many Profiles 
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+        public List<Profile> identities;
+        
+        //Create a user using a profile
+        public User(Profile profile){
+            identities = new ArrayList<Profile>();
+            this.identities.add(profile);
+        }
+        
+        //For querying user data
+        public static Finder<String ,User> find = new Finder<String, User>(Long.class, User.class);
+    }
+
+Example Profile Model
+
+.. code-block:: java
+   
+    package models;
+
+
+    import play.db.ebean.Model;
+    import securesocial.core.BasicProfile;
+
+    import javax.persistence.*;
+
+    @Entity
+    @Table(name = "profiles")
+    public class Profile extends Model {
+        @Id
+        @GeneratedValue
+        public Long id;
+        
+        //Information pulled from SecureSocial 3.0 BasicProfile Object
+        public String providerId;
+        public String authUserId;
+        public String firstName;
+        public String lastName;
+        public String fullName;
+        public String email;
+        public String avatarUrl;
+        
+        //To query Profile data.
+        public static Finder<Long , Profile> find = new Finder<Long, Profile>(Long.class , Profile.class);
+        
+        
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        public User user;
+
+        /*BasicProfile stores its data  in Scala Options.
+          Scala Options are used to store optional data.
+          The code below checks if any data exists within an option 
+          and extracts data from the one's which are selected
+          and creates a profile based on this data*/
+        public Profile(BasicProfile profile){
+            this.providerId = profile.providerId();
+            this.authUserId  = profile.userId();
+            if(profile.firstName().isDefined())
+                firstName = profile.firstName().get();
+            if(profile.lastName().isDefined())
+                lastName  = profile.lastName().get();
+            if(profile.fullName().isDefined())
+                fullName = profile.fullName().get();
+            if(profile.email().isDefined())
+                email = profile.email().get();
+            if(profile.avatarUrl().isDefined())
+                avatarUrl = profile.avatarUrl().get();
+
+       }
+    }
