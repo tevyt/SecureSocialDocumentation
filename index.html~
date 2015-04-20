@@ -8,8 +8,8 @@
     
     <title>Welcome to Secure Social Demo’s documentation! &mdash; Secure Social Demo v0.0.01 documentation</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -20,9 +20,9 @@
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
     <link rel="top" title="Secure Social Demo v0.0.01 documentation" href="#" />
     <link rel="next" title="Installation" href="installation.html" />
    
@@ -51,7 +51,7 @@
             
   <div class="section" id="welcome-to-secure-social-demo-s-documentation">
 <h1>Welcome to Secure Social Demo&#8217;s documentation!<a class="headerlink" href="#welcome-to-secure-social-demo-s-documentation" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/social_banner.jpg" src="_images/social_banner.jpg" />
+<img alt="images/social_banner.jpg" src="_images/social_banner.jpg" />
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
