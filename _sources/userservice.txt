@@ -126,3 +126,12 @@ Example User Service
     	}
   }
 
+The above implements the methods doSave , doLink and doFind.
+
+Use doSave to describe the actions to save user data upon signup or update user data upon login. 
+
+doLink describes how to save the relationship between 2 accounts that are to be linked together.
+
+doFind is describes how to locate a user based on a given userId and providerId.
+
+The other methods are used for the management of *Email/Password provider* and *OAuth tokens*.

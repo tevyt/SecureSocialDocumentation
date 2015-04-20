@@ -1,0 +1,13 @@
+================
+Linking Accounts
+================
+
+To link user accounts a second user account is simply authenticated while one is already logged in.
+
+This can be done through the reverse route
+
+.. code-block:: scala
+   
+   @env.routes.authenticationUrl(providerId , Some("route after link"))
+
+Replacing providerId with the providerId of the provider you want to link and "url after link" with some route to visit after accounts have been linked

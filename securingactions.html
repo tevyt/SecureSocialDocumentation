@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Secure Social Demo’s documentation! &mdash; Secure Social Demo v0.0.01 documentation</title>
+    <title>Securing Actions &mdash; Secure Social Demo v0.0.01 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Secure Social Demo v0.0.01 documentation" href="#" />
-    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="top" title="Secure Social Demo v0.0.01 documentation" href="index.html" />
+    <link rel="prev" title="Linking Accounts" href="linkingaccounts.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -38,9 +38,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="installation.html" title="Installation"
-             accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">Secure Social Demo v0.0.01 documentation</a> &raquo;</li> 
+          <a href="linkingaccounts.html" title="Linking Accounts"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Secure Social Demo v0.0.01 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -49,30 +49,28 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-secure-social-demo-s-documentation">
-<h1>Welcome to Secure Social Demo&#8217;s documentation!<a class="headerlink" href="#welcome-to-secure-social-demo-s-documentation" title="Permalink to this headline">¶</a></h1>
-<img alt="_images/social_banner.jpg" src="_images/social_banner.jpg" />
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-plugin">Installing Plugin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#adding-routes">Adding routes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#secure-social-configuration-file">Secure Social Configuration File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#runtime-environment">Runtime Environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#global-class">Global Class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Modeling Users</a></li>
-<li class="toctree-l1"><a class="reference internal" href="userservice.html">User Service</a></li>
-<li class="toctree-l1"><a class="reference internal" href="linkingaccounts.html">Linking Accounts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="securingactions.html">Securing Actions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="securingactions.html#examples">Examples</a></li>
-</ul>
+  <div class="section" id="securing-actions">
+<h1>Securing Actions<a class="headerlink" href="#securing-actions" title="Permalink to this headline">¶</a></h1>
+<p>To secure an action using SecureSocial simply use the annotation</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="nd">@SecuredAction</span>
+</pre></div>
 </div>
+<p>This annotation causes the route to redirect to the SecureSocial login page if a user is not currently logged in.</p>
+<p>An example useage below</p>
+<div class="highlight-java"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">securesocial.core.java.SecuredAction</span><span class="o">;</span>
+
+<span class="nd">@SecuredAction</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Result</span> <span class="nf">index</span><span class="o">(){</span>
+     <span class="k">return</span> <span class="n">ok</span><span class="o">(</span><span class="n">index</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="s">&quot;Hello Secure World&quot;</span><span class="o">));</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>I have prepared a <a class="reference external" href="http://agile-hollows-3430.herokuapp.com/">demo</a> application hosted on Heroku.</p>
+<p>The <a class="reference external" href="https://github.com/tevyt/Secure-Social-Example">source code</a> can be viewed on github.</p>
+<p>The <a class="reference external" href="https://github.com/jaliss/securesocial/tree/master/samples/java/demo">java demo</a> on SecureSocial&#8217;s github repository also contains further examples.</p>
 </div>
 
 
@@ -81,13 +79,19 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h4>Next topic</h4>
-  <p class="topless"><a href="installation.html"
-                        title="next chapter">Installation</a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Securing Actions</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="linkingaccounts.html"
+                        title="previous chapter">Linking Accounts</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/securingactions.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -116,7 +120,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
       
       |
-      <a href="_sources/index.txt"
+      <a href="_sources/securingactions.txt"
           rel="nofollow">Page source</a></li>
     </div>
 

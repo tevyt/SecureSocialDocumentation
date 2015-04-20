@@ -16,10 +16,6 @@ Descriptions of the attributes used in the configuration of the securesocial.con
 Within securesocial.conf is also where the client keys for providers are registered.
 The link below contains the list of providers currently supported by SecureSocial 3.0
 
--------------------
-Supported Providers
--------------------
-i. Twitter
 
 .. _here: http://securesocial.ws/guide/configuration.html
 

@@ -1,0 +1,38 @@
+================
+Securing Actions
+================
+
+To secure an action using SecureSocial simply use the annotation 
+
+.. code-block:: java
+
+   @SecuredAction
+
+This annotation causes the route to redirect to the SecureSocial login page if a user is not currently logged in.
+
+An example useage below
+
+.. code-block:: java
+
+   import securesocial.core.java.SecuredAction;
+
+   @SecuredAction
+   public static Result index(){
+        return ok(index.render("Hello Secure World"));
+   }
+
+========
+Examples
+========
+
+I have prepared a `demo`_ application hosted on Heroku.
+
+.. _demo : http://agile-hollows-3430.herokuapp.com/
+
+The `source code`_ can be viewed on github.
+
+.. _source code : https://github.com/tevyt/Secure-Social-Example
+
+The `java demo`_ on SecureSocial's github repository also contains further examples. 
+
+.. _java demo : https://github.com/jaliss/securesocial/tree/master/samples/java/demo

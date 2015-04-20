@@ -16,6 +16,7 @@ Contents:
    configuration.rst
    model.rst
    userservice.rst
-
+   linkingaccounts.rst
+   securingactions.rst
 
 
